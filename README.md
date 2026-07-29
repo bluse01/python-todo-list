@@ -1,6 +1,6 @@
 # Task Tracker CLI
 
-Small todo list cli to work on python skills
+Small TODO list cli to work on python skills
 
 Based on the [roadmap.sh Task Tracker Project](https://roadmap.sh/projects/task-tracker).
 

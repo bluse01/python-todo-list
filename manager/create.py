@@ -1,4 +1,5 @@
 import json
+from manager.todo_manager import todoManager
 
 fileName = "config.json"
 
@@ -27,7 +28,7 @@ def createSave(todo):
     configParsed = json.load(config)
     
   # update logic
-  configParsed.update(todo)
+  configParsed.update(todo.to_dict())
   with open(fileName, "w") as config:
     json.dump(configParsed, config)
     
@@ -38,4 +39,6 @@ def main():
     print("failed the todo creation")
     return
   
-  createSave({userInputName: userInputDesc})
+  todo = todoManager(userInputName, userInputDesc)
+  
+  createSave(todo)
