@@ -6,7 +6,7 @@ Based on the [roadmap.sh Task Tracker Project](https://roadmap.sh/projects/task-
 
 ## Features
 - Create and save new tasks to JSON storage (`config.json`)
-- Delete tasks (in-progress)
+- Delete tasks
 
 ## How to Run
 ```bash

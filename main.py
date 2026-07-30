@@ -1,4 +1,5 @@
 from manager.create import main as create
+from manager.delete import main as delete
 
 print("todo app - python")
 print("1. create new todo")
@@ -17,4 +18,4 @@ match user_input:
   case 1:
     create()
   case 2:
-    pass
+    delete()
