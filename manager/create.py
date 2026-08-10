@@ -35,18 +35,15 @@ def create_save(todo: Todo):
 		config_parsed = json.load(config)
 
 	# update logic
-	config_parsed.update(todo.to_dict())
+	dict_id = len(config_parsed) + 1
+	config_parsed.update({dict_id: todo.to_dict()})
 	with open(FILE_NAME, "w") as config:
 		json.dump(config_parsed, config)
 
 
-def main():
-	user_input_name = input("input the name of the todo: ")
-	user_input_desc = input("input the description of the todo: ")
-	if not user_input_name or not user_input_desc:
-		print("failed the todo creation")
-		return
+def main(user_input):
+	print(user_input)
 
-	todo = Todo(user_input_name, user_input_desc)
+	todo = Todo(user_input.description, user_input.status)
 
 	create_save(todo)
