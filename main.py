@@ -25,4 +25,4 @@ match args.command:
 	case "add":
 		create(args)
 	case "delete":
-		delete()
+		delete(args)

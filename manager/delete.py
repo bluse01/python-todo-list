@@ -7,9 +7,9 @@ def delete(todos: dict, target: str) -> dict:
 	removed = todos.pop(target, None)
 
 	if removed is not None:
-		print(f"Successfully deleted task: '{target}'")
+		print(f"Successfully deleted ID: '{target}'")
 	else:
-		print(f"Task '{target}' was not found")
+		print(f"ID: '{target}' was not found")
 
 	return todos
 
@@ -19,11 +19,12 @@ def update(todos: dict):
 		json.dump(todos, config)
 
 
-def read_config(target: str):
+def read_config(target: int):
+	converted_target = str(target)
 	try:
 		with open("config.json", "r") as config:
 			config_parsed = json.load(config)
-			clean_list = delete(config_parsed, target)
+			clean_list = delete(config_parsed, converted_target)
 			update(clean_list)
 	except FileNotFoundError:
 		print("Config file doesn't exist yet Create a todo first!")
@@ -32,11 +33,6 @@ def read_config(target: str):
 		print("Try deleting config.json or writing new todo if the json is empty")
 
 
-def main():
-	print("Name of the todo you want to delete")
-	user_input_name = input("Input: ")
-	if not user_input_name:
-		print("invalid name input")
-		return
-
-	read_config(user_input_name)
+def main(user_input):
+	print(user_input)
+	read_config(user_input.id)
