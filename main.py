@@ -2,6 +2,7 @@ import argparse
 
 from manager.create import main as create
 from manager.delete import main as delete
+from manager.list import main as list_todos
 
 parser = argparse.ArgumentParser(prog="task-tracker-cli")
 
@@ -19,6 +20,9 @@ parser_add.add_argument(
 parser_delete = subparsers.add_parser("delete", help="deletes the todo by id")
 parser_delete.add_argument("id", type=int, help="the id of the todo")
 
+parser_delete = subparsers.add_parser("list", help="list selected todos")
+parser_delete.add_argument("status", nargs="?", help="get the todos by the status")
+
 args = parser.parse_args()
 
 match args.command:
@@ -26,3 +30,5 @@ match args.command:
 		create(args)
 	case "delete":
 		delete(args)
+	case "list":
+		list_todos(args)
