@@ -21,4 +21,4 @@ def read_config(target: str, limit: int):
 
 
 def main(user_input):
-	read_config(user_input.status, int(user_input.limit))
+	read_config(user_input.status, user_input.limit)
