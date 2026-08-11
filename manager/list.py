@@ -1,14 +1,16 @@
 import json
 
 
-def read_config(target: str):
+def read_config(target: str, limit: int):
 	try:
 		with open("config.json", "r") as config:
 			config_parsed = json.load(config)
 		print(config_parsed)
-		for todo in config_parsed:
+		for todo in range(1, len(config_parsed)):
+			if todo > limit:
+				break
 			print(
-				f"Id: {todo}, description: {config_parsed[todo]['desc']}, status: {config_parsed[todo]['status']}"
+				f"Id: {todo}, description: {config_parsed[str(todo)]['desc']}, status: {config_parsed[str(todo)]['status']}"
 			)
 
 	except FileNotFoundError:
@@ -19,4 +21,4 @@ def read_config(target: str):
 
 
 def main(user_input):
-	read_config(user_input.status)
+	read_config(user_input.status, int(user_input.limit))

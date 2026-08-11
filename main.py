@@ -22,6 +22,9 @@ parser_delete.add_argument("id", type=int, help="the id of the todo")
 
 parser_delete = subparsers.add_parser("list", help="list selected todos")
 parser_delete.add_argument("status", nargs="?", help="get the todos by the status")
+parser_delete.add_argument(
+	"limit", nargs="?", default=10, help="how many todos to display. default = 10"
+)
 
 args = parser.parse_args()
 
