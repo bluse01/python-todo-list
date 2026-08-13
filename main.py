@@ -8,11 +8,14 @@ parser = argparse.ArgumentParser(prog="task-tracker-cli")
 
 subparsers = parser.add_subparsers(dest="command", required=True)
 
+progress_choices = ["todo", "in-progress", "done"]
+
 parser_add = subparsers.add_parser("add", help="create new todo")
 parser_add.add_argument("description", help="todos description")
 parser_add.add_argument(
+	"-s",
 	"--status",
-	choices=["todo", "in-progress", "done"],
+	choices=progress_choices,
 	default="in-progress",
 	help="todos status",
 )
@@ -21,12 +24,17 @@ parser_delete = subparsers.add_parser("delete", help="deletes the todo by id")
 parser_delete.add_argument("id", type=int, help="the id of the todo")
 
 parser_delete = subparsers.add_parser("list", help="list selected todos")
-parser_delete.add_argument("status", nargs="?", help="get the todos by the status")
 parser_delete.add_argument(
-	"limit",
-	nargs="?",
-	default=10,
+	"-s",
+	"--status",
+	choices=progress_choices,
+	help="get the todos by the status",
+)
+parser_delete.add_argument(
+	"-l",
+	"--limit",
 	type=int,
+	default=10,
 	help="how many todos to display. default = 10",
 )
 
