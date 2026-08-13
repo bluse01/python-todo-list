@@ -1,9 +1,16 @@
 import json
+from datetime import datetime, timezone
+
+
+def set_updateAt(todo: dict):
+	time = datetime.now(timezone.utc)
+	todo["updatedAt"] = time.isoformat()
 
 
 def update_todo(id: str, desc: str, config: dict):
 	if id in config:
 		config[id]["desc"] = desc
+		set_updateAt(config[id])
 
 
 def update_config(new_config: dict):
@@ -16,6 +23,7 @@ def read_config(target: str, desc: str):
 		with open("config.json", "r") as config:
 			config_parsed = json.load(config)
 		update_todo(target, desc, config_parsed)
+		# set_updateAt(target, config)
 		update_config(config_parsed)
 
 	except FileNotFoundError:

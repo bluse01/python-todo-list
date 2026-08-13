@@ -2,6 +2,13 @@ import json
 from datetime import datetime
 
 
+def format_iso_to_local(iso_string: str) -> str:
+	"""parses an ISO datetime string, converts to local time, and formats it."""
+	dt_utc = datetime.fromisoformat(iso_string)
+	dt_local = dt_utc.astimezone()
+	return dt_local.strftime("%b %d, %Y at %I:%M %p")
+
+
 def read_config(target: str, limit: int):
 	try:
 		with open("config.json", "r") as config:
@@ -18,15 +25,11 @@ def read_config(target: str, limit: int):
 			if i > limit - 1:
 				break
 
-			# parse string into a UTC datetime object
-			dt_utc = datetime.fromisoformat(v["createdAt"])
-			# convert to local time
-			dt_local = dt_utc.astimezone()
-			# time format
-			formatted_display = dt_local.strftime("%b %d, %Y at %I:%M %p")
+			formatted_created = format_iso_to_local(v["createdAt"])
+			formatted_updated = format_iso_to_local(v["updatedAt"])
 
 			print(
-				f"id: {k} - description: {v['desc']} | status: {v['status']} | createdAt: {formatted_display}"
+				f"id: {k} - description: {v['desc']} | status: {v['status']} | createdAt: {formatted_created} | updatedAt: {formatted_updated}"
 			)
 
 	except FileNotFoundError:
