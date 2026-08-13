@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 
 def read_config(target: str, limit: int):
@@ -16,9 +17,18 @@ def read_config(target: str, limit: int):
 		for i, (k, v) in enumerate(filtered_list.items()):
 			if i > limit - 1:
 				break
-			print(f"id: {k} - description: {v['desc']} | status: {v['status']}")
 
-	# f"Id: {todo}, description: {filtered_list[str(todo)]['desc']}, status: {filtered_list[str(todo)]['status']}"
+			# parse string into a UTC datetime object
+			dt_utc = datetime.fromisoformat(v["createdAt"])
+			# convert to local time
+			dt_local = dt_utc.astimezone()
+			# time format
+			formatted_display = dt_local.strftime("%b %d, %Y at %I:%M %p")
+
+			print(
+				f"id: {k} - description: {v['desc']} | status: {v['status']} | createdAt: {formatted_display}"
+			)
+
 	except FileNotFoundError:
 		print("Config file doesn't exist yet Create a todo first!")
 	except json.JSONDecodeError:
