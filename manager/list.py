@@ -4,6 +4,9 @@ from datetime import datetime
 
 def format_iso_to_local(iso_string: str) -> str:
 	"""parses an ISO datetime string, converts to local time, and formats it."""
+	if not iso_string:
+		return None
+
 	dt_utc = datetime.fromisoformat(iso_string)
 	dt_local = dt_utc.astimezone()
 	return dt_local.strftime("%b %d, %Y at %I:%M %p")
