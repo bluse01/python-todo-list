@@ -1,37 +1,11 @@
-import json
-from datetime import datetime, timezone
-
-
-def set_updateAt(todo: dict):
-	time = datetime.now(timezone.utc)
-	todo["updatedAt"] = time.isoformat()
-
-
-def update_todo(id: str, desc: str, config: dict):
-	if id in config:
-		config[id]["desc"] = desc
-		set_updateAt(config[id])
-
-
-def update_config(new_config: dict):
-	with open("config.json", "w") as config:
-		json.dump(new_config, config)
-
-
-def read_config(target: str, desc: str):
-	try:
-		with open("config.json", "r") as config:
-			config_parsed = json.load(config)
-		update_todo(target, desc, config_parsed)
-		# set_updateAt(target, config)
-		update_config(config_parsed)
-
-	except FileNotFoundError:
-		print("Config file doesn't exist yet Create a todo first!")
-	except json.JSONDecodeError:
-		print("Config file is empty or corrupted")
-		print("Try deleting config.json or writing new todo if the json is empty")
+from manager.todo_manager import TaskManager
 
 
 def main(user_input):
-	read_config(user_input.id, user_input.description)
+	if not user_input.description and not user_input.status:
+		print("No fields provided to update")
+		print("Both fields can't be empty")
+		return
+
+	manager = TaskManager()
+	manager.update_task(user_input.id, user_input.description, user_input.status)

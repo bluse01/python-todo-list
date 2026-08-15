@@ -3,7 +3,6 @@ import argparse
 from manager.create import main as create
 from manager.delete import main as delete
 from manager.list import main as list_todos
-from manager.mark import main as mark
 from manager.update import main as update
 
 parser = argparse.ArgumentParser(prog="task-tracker-cli")
@@ -22,29 +21,28 @@ parser_add.add_argument(
 	help="todos status",
 )
 
-parser_delete = subparsers.add_parser(
+parser_update = subparsers.add_parser(
 	"update", help="updates the selected todos description"
 )
-parser_delete.add_argument("id", type=str, help="the id of the todo")
-parser_delete.add_argument("description", help="the description u want to update with")
-
-parser_delete = subparsers.add_parser("mark", help="updates the selected todos status")
-parser_delete.add_argument("id", type=str, help="the id of the todo")
-parser_delete.add_argument(
-	"status", choices=progress_choices, help="the status u want to update with"
+parser_update.add_argument("id", help="the id of the todo")
+parser_update.add_argument(
+	"-d", "--description", help="the description u want to update with"
+)
+parser_update.add_argument(
+	"-s", "--status", choices=progress_choices, help="the status u want to update with"
 )
 
 parser_delete = subparsers.add_parser("delete", help="deletes the todo by id")
 parser_delete.add_argument("id", type=int, help="the id of the todo")
 
-parser_delete = subparsers.add_parser("list", help="list selected todos")
-parser_delete.add_argument(
+parser_list = subparsers.add_parser("list", help="list selected todos")
+parser_list.add_argument(
 	"-s",
 	"--status",
 	choices=progress_choices,
 	help="get the todos by the status",
 )
-parser_delete.add_argument(
+parser_list.add_argument(
 	"-l",
 	"--limit",
 	type=int,
@@ -63,5 +61,3 @@ match args.command:
 		list_todos(args)
 	case "update":
 		update(args)
-	case "mark":
-		mark(args)
