@@ -33,7 +33,7 @@ parser_update.add_argument(
 )
 
 parser_delete = subparsers.add_parser("delete", help="deletes the todo by id")
-parser_delete.add_argument("id", type=int, help="the id of the todo")
+parser_delete.add_argument("id", help="the id of the todo")
 
 parser_list = subparsers.add_parser("list", help="list selected todos")
 parser_list.add_argument(

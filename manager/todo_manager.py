@@ -48,6 +48,18 @@ class TaskManager:
 		with open(self.file_name, "w") as config:
 			json.dump(data, config)
 
+	def delete(self, task_id: str) -> None:
+		config = self.load()
+
+		removed = config.pop(task_id, None)
+
+		if removed is not None:
+			print(f"Successfully deleted ID: '{task_id}'")
+		else:
+			print(f"ID: '{task_id}' was not found")
+
+		self.save(config)
+
 	def update_task(
 		self, task_id: str, desc: str | None = None, status: str | None = None
 	) -> None:
